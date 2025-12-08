@@ -126,3 +126,75 @@ conn.close()
 
 // results accessible outside of sql connection
 results.forEach(System.out::println)
+
+
+
+/* Copilot tells me I can't remove the column (key) name without essentially iterating over each line
+and making it a single string or iterating to print each row sequentially. In other words, there's not
+a convenient way to display the information like a Pandas dataframe so it's practical to read, without
+adding computational work. So I guess I'll deal with it, even though I don't think this is especially
+human readable.
+*/
+
+// List<Map<String, Object>> results = new ArrayList<>()
+
+// Statement st = conn.createStatement()
+// ResultSet rs = st.executeQuery("SELECT * FROM student_bio LIMIT 10;")
+// ResultSetMetaData rsmd = rs.getMetaData()
+// int columnCount = rsmd.getColumnCount()
+
+// while (rs.next()) {
+//     System.out.print("Column 1 returned ")
+//     System.out.println(rs.getString(1))
+//     Map<String, Object> row = new HashMap<>()
+//     for (int i = 1; i <= columnCount; i++) {
+//         row.put(rsmd.getColumnName(i), rs.getObject(i))
+//     }
+//     results.add(row)
+// }
+// rs.close()
+// st.close()
+// results.forEach(System.out::println)
+
+
+
+/*
+To output the mapping values:
+*/
+
+// List<Map<String, Object>> results = new ArrayList<>()
+
+// Statement st = conn.createStatement()
+// ResultSet rs = st.executeQuery("SELECT * FROM student_bio LIMIT 10;")
+// ResultSetMetaData rsmd = rs.getMetaData()
+// int columnCount = rsmd.getColumnCount()
+
+// while (rs.next()) {
+//     Map<String, Object> row = new LinkedHashMap<>()
+//     for (int i = 1; i <= columnCount; i++) {
+//         row.put(rsmd.getColumnName(i), rs.getObject(i))
+//     }
+//     results.add(row)
+// }
+// rs.close()
+// st.close()
+// // results.forEach(System.out::println)
+
+/*Options: prints only the value;
+or prints specified values, separated by a comma here;
+or just the keys for the first row;
+or keys for each row*/
+// // results.each { row ->
+// //     println row['last_name']
+// //     }
+
+// results.each { row ->
+//     println "${row['last_name']}, ${row['first_name']}"
+// }
+
+// println results[0].keySet()
+
+// results.each { row ->
+//     println row['last_name']
+//     }
+// // this line could alternatively be results.each { println it['last_name'] }

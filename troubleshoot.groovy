@@ -1,65 +1,28 @@
 // just storage to test a fragment that is not working
 
-@Grab('org.postgresql:postgresql:42.7.8')
-import java.sql.*
-
-String url = "jdbc:postgresql://127.0.0.1/financial_aid"
-Properties props = new Properties()
-props.setProperty("user", "postgres")
-props.setProperty("password", "root")
-props.setProperty("ssl", "false")
-Connection conn = DriverManager.getConnection(url, props)
-
-// PARENT
-// Statement st = conn.createStatement()
-// ResultSet rs = st.executeQuery("SELECT * FROM student_bio LIMIT 10;")
-// while (rs.next()) {
-//     System.out.print("Column 1 returned ")
-//     System.out.println(rs.getString(1))
-// }
-// rs.close()
-// st.close()
+def results = [
+    [student_id:4423,  last_name:"Baker",   first_name:"Kurt",   gpa:0.02, credits:11],
+    [student_id:94337, last_name:"Aguilar", first_name:"Dee",    gpa:1.08, credits:3],
+    [student_id:27998, last_name:"Hunter",  first_name:"Joe",    gpa:3.31, credits:10],
+    [student_id:24633, last_name:"Gomez",   first_name:"Ed",     gpa:3.8,  credits:15],
+    [student_id:8982,  last_name:"Blair",   first_name:"Ramona", gpa:1.97, credits:14]
+]
 
 
-
-List<Map<String, Object>> results = new ArrayList<>()
-
-Statement st = conn.createStatement()
-ResultSet rs = st.executeQuery("SELECT * FROM student_bio LIMIT 10;")
-ResultSetMetaData rsmd = rs.getMetaData()
-int columnCount = rsmd.getColumnCount()
-
-while (rs.next()) {
-    System.out.print("Column 1 returned ")
-    System.out.println(rs.getString(1))
-    Map<String, Object> row = new HashMap<>()
-    for (int i = 1; i <= columnCount; i++) {
-        row.put(rsmd.getColumnName(i), rs.getObject(i))
-    }
-    results.add(row)
-}
-rs.close()
-st.close()
-
-// while (rs.next()) {
-//     Map<String, Object> row = new HashMap<>()
-//     for (int i = 1; i <= columnCount; i++) {
-//         row.put(rsmd.getColumnName(i), rs.getObject(i))
-//     }
-//     results.add(row)
+// results.each { row ->
+//     println "ID ${row['student_id']} - ${row['last_name']}, ${row['first_name']} (GPA: ${row['gpa']}, Credits: ${row['credits']})"
 // }
 
-// // while (rs.next()) {
-// //     Map<String, Object> row = new HashMap<>()
-// //     for (int i = 1; i <= columnCount; i++) {
-// //         row.put(rsmd.getColumnName(i), rs.getObject(i))
-// //     }
-// //     results.add(row)
-// // }
+// Extract headers from the first row
+def headers = results[0].keySet()
 
-// // rs.close()
-// // st.close()
-// // conn.close()
+// Create a CSV file
+def file = new File("./Groovy/fin_aid_example/students.csv")
+// check file location: println "Writing to: ${file.absolutePath}"
 
-// // Now you can use results outside the connection
-// results.forEach(System.out::println)
+// Write header
+file.text = headers.join(",") + System.lineSeparator()
+
+// Write each row
+results.each { row ->
+    file << headers.collect { h -> row[h] }.join(",") + System.lineSeparator()}
