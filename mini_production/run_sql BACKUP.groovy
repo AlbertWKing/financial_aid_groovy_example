@@ -4,7 +4,7 @@ import java.sql.*
 import java.util.Properties
 
 class run_sql {
-    def run_query(query) {
+    def run_query() {
         String url = "jdbc:postgresql://127.0.0.1/financial_aid"
         Properties props = new Properties()
         props.setProperty("user", "postgres")
@@ -16,7 +16,7 @@ class run_sql {
         def results = []
         try {
             Statement stmt = conn.createStatement()
-            ResultSet rs = stmt.executeQuery(query)
+            ResultSet rs = stmt.executeQuery("SELECT * FROM student_bio LIMIT 5;")
 
             // Extract metadata for column names
             def meta = rs.metaData
