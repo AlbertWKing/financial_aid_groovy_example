@@ -1,16 +1,5 @@
 class Main {
     static void main(String[] args) {
-        // String query = """
-        // SELECT *
-        // FROM student_bio
-        // LIMIT 10;"""
-
-        // String query = """
-        // SELECT bio.student_id AS "Student ID", detail.award_type AS "Award Type", detail.award_amount AS "Award Amount"
-        // FROM student_bio AS bio
-        // JOIN student_award AS detail
-        // ON bio.student_id = detail.student_id
-        // LIMIT 15;"""
 
         String query = new File("/Users/albert/Documents/Groovy/fin_aid_example/mini_production/sql_query.txt").text
 
