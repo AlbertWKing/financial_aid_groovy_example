@@ -1,0 +1,5 @@
+SELECT bio.student_id AS "Student ID", detail.award_type AS "Award Type", detail.award_amount AS "Award Amount"
+FROM student_bio AS bio
+JOIN student_award AS detail
+ON bio.student_id = detail.student_id
+LIMIT 10;

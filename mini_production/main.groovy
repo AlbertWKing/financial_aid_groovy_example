@@ -5,22 +5,17 @@ class Main {
         // FROM student_bio
         // LIMIT 10;"""
 
-        String query = """
-        SELECT bio.student_id AS "Student ID", detail.award_type AS "Award Type", detail.award_amount AS "Award Amount"
-        FROM student_bio AS bio
-        JOIN student_award AS detail
-        ON bio.student_id = detail.student_id
-        LIMIT 15;"""
-
         // String query = """
-        // SELECT bio.student_id as "Student ID", detail.award_type as "Award Type", detail.award_amount as "Award Amount"
+        // SELECT bio.student_id AS "Student ID", detail.award_type AS "Award Type", detail.award_amount AS "Award Amount"
         // FROM student_bio AS bio
-        // JOIN student_award as detail
+        // JOIN student_award AS detail
         // ON bio.student_id = detail.student_id
         // LIMIT 15;"""
 
+        String query = new File("/Users/albert/Documents/Groovy/fin_aid_example/mini_production/sql_query.txt").text
+
         def sql_query = new run_sql()
-        def results = sql_query.run_query(query)
+        def results = sql_query.run_query("""${query}""")
 
         def csv_output = new output_to_csv()
         // println "Working directory: " + new File(".").absolutePath
